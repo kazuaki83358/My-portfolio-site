@@ -379,9 +379,9 @@ hr {
 
 .c1:hover {
   transform: translateY(-6px) scale(1.03);
-  border-color: #ff3333;               
-  background-color: #fff5f5;               
-  box-shadow: 0 4px 15px rgba(0,0,0,0.15);  
+  border-color: #474af0;               /* Change from red to blue */
+  background-color: #f0f2ff;           /* Light blue background */
+  box-shadow: 0 4px 15px rgba(71, 74, 240, 0.15);  /* Blue-tinted shadow */
   cursor: pointer;                         
 }
 
