@@ -175,3 +175,53 @@ document.getElementById('downloadCV').addEventListener('click', function () {
     a.click();
     document.body.removeChild(a);
   });
+
+// Handle form submission with AJAX
+const contactForm = document.getElementById('contact-form');
+const submitButton = contactForm.querySelector('.btn-send');
+
+contactForm.addEventListener('submit', async function(e) {
+    e.preventDefault();
+    
+    // Change button state
+    submitButton.disabled = true;
+    submitButton.textContent = 'Sending...';
+    
+    try {
+        const formData = new FormData(this);
+        const response = await fetch(this.action, {
+            method: 'POST',
+            body: formData,
+            headers: {
+                'Accept': 'application/json'
+            }
+        });
+        
+        if (response.ok) {
+            // Success message
+            submitButton.textContent = 'Message Sent!';
+            submitButton.style.backgroundColor = '#22c55e';
+            contactForm.reset();
+            
+            // Reset button after 3 seconds
+            setTimeout(() => {
+                submitButton.textContent = 'Send Message';
+                submitButton.style.backgroundColor = '';
+                submitButton.disabled = false;
+            }, 3000);
+        } else {
+            throw new Error('Network response was not ok');
+        }
+    } catch (error) {
+        // Error message
+        submitButton.textContent = 'Failed to send';
+        submitButton.style.backgroundColor = '#ef4444';
+        
+        // Reset button after 3 seconds
+        setTimeout(() => {
+            submitButton.textContent = 'Send Message';
+            submitButton.style.backgroundColor = '';
+            submitButton.disabled = false;
+        }, 3000);
+    }
+});
