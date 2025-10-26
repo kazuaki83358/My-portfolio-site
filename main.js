@@ -1,10 +1,21 @@
 const navLinks = document.querySelectorAll('.ul-list li a');
 const sections = document.querySelectorAll('section');
+const menuToggle = document.getElementById('menu-toggle');
+const navMenu = document.getElementById('nav-menu');
 
 function removeActive() {
   navLinks.forEach(link => link.parentElement.classList.remove('active'));
 }
 
+// ✅ Toggle mobile menu
+menuToggle.addEventListener('click', () => {
+  navMenu.classList.toggle('show');
+  menuToggle.innerHTML = navMenu.classList.contains('show')
+    ? '<i class="fa-solid fa-xmark"></i>'
+    : '<i class="fa-solid fa-bars"></i>';
+});
+
+// ✅ Smooth scroll + highlight active + close menu on mobile
 navLinks.forEach(link => {
   link.addEventListener('click', e => {
     e.preventDefault();
@@ -12,14 +23,20 @@ navLinks.forEach(link => {
     const targetSection = document.getElementById(targetId);
 
     window.scrollTo({
-      top: targetSection.offsetTop - 80, 
+      top: targetSection.offsetTop - 80,
       behavior: 'smooth'
     });
 
     removeActive();
     link.parentElement.classList.add('active');
+
+    if (window.innerWidth <= 768) {
+      navMenu.classList.remove('show');
+      menuToggle.innerHTML = '<i class="fa-solid fa-bars"></i>';
+    }
   });
 });
+
 
 window.addEventListener('scroll', () => {
   let scrollPos = window.scrollY + 100;

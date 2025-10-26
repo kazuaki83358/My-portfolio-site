@@ -3,12 +3,16 @@
   padding: 0;
 }
 
+/* ---------------------- */
+/* 🔹 Desktop + Tablet (original look) */
+/* ---------------------- */
 header {
   position: fixed;
   top: 0;
   left: 0;
   width: 100%;
   z-index: 1000;
+  background: transparent;
 }
 
 .header-list {
@@ -20,6 +24,14 @@ header {
   align-items: center;
   justify-content: center;
   padding: 20px 0;
+  position: relative;
+}
+
+.logo {
+  display: none; /* Hidden except on phone */
+  font-family: "Poppins", sans-serif;
+  font-weight: 600;
+  color: black;
 }
 
 .ul-list {
@@ -55,6 +67,85 @@ header {
 .ul-list li.active i {
   color: white;
 }
+
+/* ---------------------- */
+/* 🔹 Mobile (like your 1st image) */
+/* ---------------------- */
+.menu-toggle {
+  display: none;
+  font-size: 1.5rem;
+  color: black;
+  cursor: pointer;
+}
+
+@media (max-width: 768px) {
+  .div-list {
+    justify-content: space-between;
+    padding: 15px 20px;
+  }
+
+  .logo {
+    display: block;
+  }
+
+  .menu-toggle {
+    margin-right: 10px;
+    display: block;
+  }
+
+  /* ✅ Fixed: Floating dropdown that stays inside screen */
+  .ul-list {
+  position: absolute;
+  top: 65px;
+  right: 8%;
+  transform: translateX(50%) translateY(-10px);
+  background: white;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 10px;
+  padding: 15px 18px;
+  border-radius: 15px;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+  min-width: 170px;
+  max-width: calc(100vw - 40px);
+  overflow: hidden;
+  opacity: 0;
+  pointer-events: none;
+  transition: all 0.3s ease;
+}
+
+
+  .ul-list li {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 10px 10px;
+    border-radius: 10px;
+    transition: background 0.3s ease;
+  }
+
+  .ul-list li:hover {
+    background-color: #f3f3f3;
+  }
+
+  .ul-list li.active {
+    background-color: black;
+  }
+
+  .ul-list li.active a,
+  .ul-list li.active i {
+    color: white;
+  }
+
+  .ul-list.show {
+    opacity: 1;
+    pointer-events: auto;
+    transform: translateY(0);
+  }
+}
+
+
 
 /* fine header  */
 
@@ -821,9 +912,9 @@ body {
 
 /* Phone layout */
 @media (max-width: 768px) {
-  header {
+  /* header {
     display: none;
-  }
+  } */
 
   .home, .about, .project, .services, .contact {
     margin: 100px 20px;
@@ -899,11 +990,13 @@ body {
 /* ...existing code... */
 @media (max-width: 1024px) {
 
-  header {
+  /* header {
     display: none;
-  }
+  } */
 
   .home, .about, .project, .services, .contact {
+    top: 40px;
+    position: relative;
     margin: 20px auto;
     padding: 0 15px;
     text-align: center;
