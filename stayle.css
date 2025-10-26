@@ -1308,3 +1308,50 @@ body {
     align-items: stretch;
   }
 }
+
+/* Add initial state and transitions for sections */
+section {
+    opacity: 1;
+    transform: translateY(0);
+    transition: opacity 0.6s ease, transform 0.6s ease;
+}
+
+/* Ensure first section (home) is visible by default */
+.home {
+    opacity: 1 !important;
+    transform: translateY(0) !important;
+}
+
+/* Keep the "Available for freelance work" text visible */
+.home-p {
+    opacity: 1 !important;
+}
+
+/* Immediate visibility for home section */
+.home,
+.home-container,
+.home-section,
+.info-home,
+.home h1,
+.home h3,
+.home p,
+.info-p,
+.info-p2,
+.btnn,
+.follow {
+    opacity: 1 !important;
+    transform: none !important;
+    transition: none !important;
+}
+
+/* Smooth reveal for other sections */
+section:not(.home) {
+    opacity: 0;
+    transform: translateY(20px);
+    transition: opacity 0.6s ease, transform 0.6s ease;
+}
+
+section:not(.home).visible {
+    opacity: 1;
+    transform: translateY(0);
+}

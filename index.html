@@ -399,3 +399,23 @@
 </body>
 
 </html>
+
+<style>
+  /* Add initial state and transitions for sections */
+section {
+    opacity: 1;
+    transform: translateY(0);
+    transition: opacity 0.6s ease, transform 0.6s ease;
+}
+
+/* Ensure first section (home) is visible by default */
+.home {
+    opacity: 1 !important;
+    transform: translateY(0) !important;
+}
+
+/* Keep the "Available for freelance work" text visible */
+.home-p {
+    opacity: 1 !important;
+}
+</style>

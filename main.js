@@ -225,3 +225,37 @@ contactForm.addEventListener('submit', async function(e) {
         }, 3000);
     }
 });
+
+document.addEventListener('DOMContentLoaded', function() {
+    // Make home section and all its content visible immediately
+    const homeSection = document.querySelector('.home');
+    const homeContent = document.querySelectorAll('.home *');
+    
+    if (homeSection) {
+        homeSection.style.opacity = '1';
+        homeSection.style.transform = 'translateY(0)';
+        homeContent.forEach(element => {
+            element.style.opacity = '1';
+            element.style.transform = 'translateY(0)';
+        });
+    }
+
+    // For other sections, keep the scroll animation
+    const otherSections = document.querySelectorAll('section:not(.home)');
+    const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                entry.target.style.opacity = '1';
+                entry.target.style.transform = 'translateY(0)';
+            }
+        });
+    }, {
+        threshold: 0.1
+    });
+
+    otherSections.forEach(section => {
+        section.style.opacity = '0';
+        section.style.transform = 'translateY(20px)';
+        observer.observe(section);
+    });
+});
