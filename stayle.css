@@ -115,28 +115,61 @@ header {
   display: flex;
   gap: 1rem;
   padding-bottom: 30px;
+  align-items: center;      /* center vertically */
+  justify-content: flex-start;
+  flex-wrap: wrap;          /* prevents overflow on small screens */
 }
 
 .btn-href{
   margin: 3px;
+  display: inline-block;
+  text-decoration: none;
+  margin: 0;
+  padding: 0;
 }
 
-.btn-home1 {
-  background-color: #000000;
-  color: rgb(255, 255, 255);
-  border: none;
+/* primary and secondary buttons: unified sizing and alignment */
+.btn-home1,
+.btn-home2 {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 10px 16px;
+  min-width: 140px;
   border-radius: 10px;
-  padding: 10px 10px;
+  font-size: 15px;
   cursor: pointer;
+  margin: 0;
+  transition: background 0.25s, color 0.25s, transform 0.12s;
+  -webkit-appearance: none; /* remove native button styles on iOS */
 }
 
+/* primary */
+.btn-home1 {
+  background-color: #000;
+  color: #fff;
+  border: none;
+}
+
+/* secondary */
 .btn-home2 {
   background-color: transparent;
-  border: 2px solid black;
-  border-radius: 10px;
-  padding: 10px 10px;
-  cursor: pointer;
-  transition: 0.4s;
+  border: 2px solid #000;
+  color: #000;
+}
+
+/* subtle press effect */
+.btn-home1:active,
+.btn-home2:active {
+  transform: translateY(1px);
+}
+
+/* focus styles for accessibility */
+.btn-home1:focus,
+.btn-home2:focus {
+  outline: 3px solid rgba(71,74,240,0.18);
+  outline-offset: 2px;
 }
 
 .btn-home2:hover{
@@ -301,12 +334,35 @@ hr {
   margin: auto;
 }
 
+/* Ensure grid rows size correctly and last row isn't clipped */
+.projects-container {
+  grid-auto-rows: auto;      /* let each row size to its content */
+  align-items: start;        /* prevent items from vertically centering/cutting */
+  padding-bottom: 60px;      /* space so last cards don't touch footer */
+}
+
 .project-card {
   background: #fff;
   padding: 20px;
   border-radius: 16px;
   box-shadow: 0 5px 15px rgba(0,0,0,0.1);
   transition: 0.3s ease;
+  display: flex;
+  flex-direction: column;
+  height: 500px;
+}
+
+/* Override fixed card height on smaller screens */
+@media (max-width: 1024px) {
+  .project-card {
+    height: auto !important;
+    min-height: 0;
+  }
+
+  .project {
+    align-items: stretch; /* allow projects-container to take full width/height */
+    padding-bottom: 20px;
+  }
 }
 
 .project-card:hover {
@@ -351,28 +407,23 @@ hr {
 }
 
 .btns {
+  margin-top: auto;
   display: flex;
   justify-content: center;
-  gap: 10px;
+  padding: 15px 0;
 }
 
 .btn {
+  width: fit-content;
+  padding: 8px 20px;
+  border-radius: 6px;
   background: #1e40af;
   color: white;
   text-decoration: none;
-  padding: 8px 14px;
-  border-radius: 25px;
-  font-size: 0.9rem;
   transition: 0.3s;
   display: flex;
   align-items: center;
-  gap: 6px;
-}
-
-.btn:hover {
-  background: #2563eb;
-  border-radius: 25px;
-
+  gap: 8px;
 }
 
 .services{
@@ -809,8 +860,43 @@ body {
     flex-direction: column;
     gap: 15px;
   }
+
+  /* ensure button wrappers take full width on mobile */
+  .btn-href {
+    display: block;
+    width: 100%;
+    box-sizing: border-box;
+  }
+
+  /* make both Hire and Download CV identical in size and tap area */
+  .btn-home1,
+  .btn-home2 {
+    display: inline-flex;
+    width: 100%;
+    max-width: 420px;    /* prevents overly wide buttons on large phones */
+    padding: 12px 16px;
+    height: 48px;        /* uniform height */
+    align-items: center;
+    justify-content: center;
+    box-sizing: border-box;
+    font-size: 16px;
+    border-radius: 10px;
+  }
+
+  /* if btn-home2 uses a border, ensure visual parity without changing colors */
+  .btn-home2 {
+    /* keep existing border color; padding/height already equalized */
+  }
+
+  .btnn {
+    flex-direction: column;
+    gap: 12px;
+    align-items: center;
+    width: 100%;
+  }
 }
 
+/* ...existing code... */
 @media (max-width: 1024px) {
 
   header {
@@ -884,5 +970,179 @@ body {
 
   html, body {
     overflow-x: hidden;
+  }
+}
+
+/* Mobile image fixes (ensure nishant.jpg and other images display correctly on small screens) */
+@media (max-width: 480px) {
+  .about img,
+  .home img,
+  .project-card img,
+  .service-card img {
+    position: static !important;
+    bottom: auto !important;
+    max-width: 420px;
+    height: auto !important;
+    object-fit: cover;
+    border-radius: 12px;
+    margin: 0 auto 12px;
+    display: block;
+  }
+
+  /* If the filename/path contains "nishant" prefer contain to avoid important parts being cropped */
+  .about img[src*="nishant"],
+  .home img[src*="nishant"],
+  img[src*="nishant"] {
+    object-fit: contain;
+    max-height: 60vh;
+  }
+}
+
+/* Slightly larger phones / small tablets */
+@media (max-width: 768px) and (min-width: 481px) {
+  .about img,
+  .home img,
+  .project-card img,
+  .service-card img {
+    position: static !important;
+    bottom: auto !important;
+    width: 100% !important;
+    max-width: 540px;
+    height: auto !important;
+    object-fit: cover;
+    border-radius: 12px;
+    margin: 0 auto 12px;
+  }
+}
+
+/* Tablet-specific fix for nishant.jpg */
+@media (min-width: 481px) and (max-width: 1024px) {
+  .about img[src*="nishant"],
+  img[src*="nishant"] {
+    width: 260px;               /* fixed, balanced size on tablets */
+    max-width: 60%;            /* relative cap for varied screens */
+    height: auto;
+    object-fit: contain;       /* avoid cropping important parts */
+    margin: 0 auto 16px;
+    position: relative;        /* override desktop bottom offset */
+    bottom: 0;
+    border-radius: 12px;
+    box-shadow: none;
+    display: block;
+  }
+}
+
+/* Tablet: fix feature / project cards so layout and GitHub button align consistently */
+@media (min-width: 768px) and (max-width: 1024px) {
+  /* use two-column layout on tablets */
+  .projects-container {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 20px;
+    max-width: 960px;
+    margin: 0 auto;
+    align-items: stretch; /* ensure grid items fill same vertical space if possible */
+  }
+
+  /* keep cards flexible and equalize height behavior */
+  .project-card {
+    display: flex;
+    flex-direction: column;
+    min-height: 420px; /* keeps cards visually balanced */
+    height: auto;      /* allow content to grow on smaller tablets */
+    padding: 18px;
+  }
+
+  /* consistent image sizing inside cards */
+  .project-card img {
+    width: 100%;
+    height: 180px;
+    object-fit: cover;
+    border-radius: 10px;
+    margin-bottom: 12px;
+  }
+
+  /* allow description to take available space so buttons sit at bottom */
+  .project-card p {
+    flex: 1 1 auto;
+    margin-bottom: 12px;
+  }
+
+  /* ensure button block sticks to bottom */
+  .btns {
+    margin-top: auto;
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+    padding-top: 8px;
+  }
+
+  /* tighten skill badges and font sizes for tablet */
+  .skills a {
+    font-size: 0.78rem;
+    padding: 4px 8px;
+  }
+
+  /* service / feature cards match project card behavior */
+  .service-card {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    min-height: 320px;
+    padding: 20px;
+  }
+
+  .service-card img {
+    width: 80px;
+    height: auto;
+    margin: 0 auto 12px;
+  }
+
+  /* reduce LeetCode icon for tablet */
+  .icon-leet img {
+    width: 16px !important;
+  }
+}
+
+/* Extra safety for narrow phones */
+@media (max-width: 768px) {
+  .projects-container {
+    gap: 18px;
+    padding-bottom: 80px; /* more bottom space for mobile where footer overlaps */
+  }
+
+  .project-card {
+    height: auto !important;
+  }
+}
+
+/* Tablet fix: ensure last feature/service cards are not cut off */
+@media (min-width: 768px) and (max-width: 1024px) {
+  /* let grid rows stretch uniformly */
+  .projects-container,
+  .services-container {
+    grid-auto-rows: 1fr;    /* each row's height will match the tallest cell */
+    align-items: stretch;   /* ensure children stretch to fill grid cell */
+    padding-bottom: 80px;   /* extra space so last row doesn't touch footer */
+  }
+
+  /* make cards fill their grid cell and allow internal flex sizing */
+  .project-card,
+  .service-card {
+    height: 100%;
+    min-height: 0;          /* allows flex children to shrink properly */
+    display: flex;
+    flex-direction: column;
+  }
+
+  /* let content area grow so buttons stay at bottom */
+  .project-card p,
+  .service-card p {
+    flex: 1 1 auto;
+    min-height: 0;
+  }
+
+  /* ensure parent .project takes full available width/height */
+  .project, .services {
+    align-items: stretch;
   }
 }
