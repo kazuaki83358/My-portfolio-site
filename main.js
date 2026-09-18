@@ -8,6 +8,40 @@ function removeActive() {
   navLinks.forEach(link => link.parentElement.classList.remove('active'));
 }
 
+// Scroll Reveal Elements (declared before scroll listener to avoid ReferenceError)
+const revealElements = document.querySelectorAll('.home-container, .about-container, .projects-container, .services-container, .contact-content');
+revealElements.forEach(el => el.classList.add('reveal'));
+
+// Back To Top Button (declared before scroll listener to avoid ReferenceError)
+const backToTop = document.createElement('div');
+backToTop.innerHTML = '<i class="fa-solid fa-chevron-up"></i>';
+backToTop.id = "back-to-top";
+document.body.appendChild(backToTop);
+
+backToTop.style.cssText = `
+  position: fixed;
+  bottom: 40px;
+  right: 40px;
+  background: #474af0;
+  color: white;
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  display: none;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  z-index: 1000;
+  transition: transform 0.3s ease;
+`;
+
+backToTop.addEventListener('click', () => {
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+});
+
+backToTop.addEventListener('mouseover', () => backToTop.style.transform = 'scale(1.2)');
+backToTop.addEventListener('mouseout', () => backToTop.style.transform = 'scale(1)');
+
 // Toggle Mobile Menu
 if (menuToggle && navMenu) {
   menuToggle.addEventListener('click', () => {
@@ -69,42 +103,8 @@ window.addEventListener('scroll', () => {
   });
 });
 
-// Scroll Reveal Elements
-const revealElements = document.querySelectorAll('.home-container, .about-container, .projects-container, .services-container, .contact-content');
-revealElements.forEach(el => el.classList.add('reveal'));
-
-// Back To Top Button
-const backToTop = document.createElement('div');
-backToTop.innerHTML = '<i class="fa-solid fa-chevron-up"></i>';
-backToTop.id = "back-to-top";
-document.body.appendChild(backToTop);
-
-backToTop.style.cssText = `
-  position: fixed;
-  bottom: 40px;
-  right: 40px;
-  background: #474af0;
-  color: white;
-  width: 50px;
-  height: 50px;
-  border-radius: 50%;
-  display: none;
-  align-items: center;
-  justify-content: center;
-  cursor: pointer;
-  z-index: 1000;
-  transition: transform 0.3s ease;
-`;
-
-backToTop.addEventListener('click', () => {
-  window.scrollTo({ top: 0, behavior: 'smooth' });
-});
-
-backToTop.addEventListener('mouseover', () => backToTop.style.transform = 'scale(1.2)');
-backToTop.addEventListener('mouseout', () => backToTop.style.transform = 'scale(1)');
-
 // Role Typing Animation
-const typingElement = document.querySelector('.info-home h3'); 
+const typingElement = document.querySelector('.info-home h3');
 const words = [
   "Android Developer",
   "Software Developer",
@@ -127,7 +127,7 @@ function type() {
   if (!typingElement) return;
   const currentWord = words[wordIndex];
   const displayedText = currentWord.substring(0, charIndex);
-  
+
   typingElement.innerHTML = `<span class="role-text">${displayedText}</span><span class="cursor">|</span>`;
 
   if (!isDeleting && charIndex < currentWord.length) {
@@ -214,10 +214,10 @@ if (contactForm) {
 
   contactForm.addEventListener('submit', async function(e) {
     e.preventDefault();
-    
+
     submitButton.disabled = true;
     submitButton.textContent = 'Sending...';
-    
+
     try {
       const formData = new FormData(this);
       const response = await fetch(this.action, {
@@ -227,12 +227,12 @@ if (contactForm) {
           'Accept': 'application/json'
         }
       });
-      
+
       if (response.ok) {
         submitButton.textContent = 'Message Sent!';
         submitButton.style.backgroundColor = '#22c55e';
         contactForm.reset();
-        
+
         setTimeout(() => {
           submitButton.textContent = 'Send Message';
           submitButton.style.backgroundColor = '';
@@ -244,7 +244,7 @@ if (contactForm) {
     } catch (error) {
       submitButton.textContent = 'Failed to send';
       submitButton.style.backgroundColor = '#ef4444';
-      
+
       setTimeout(() => {
         submitButton.textContent = 'Send Message';
         submitButton.style.backgroundColor = '';
@@ -260,7 +260,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
   const homeSection = document.querySelector('.home');
   const homeContent = document.querySelectorAll('.home *');
-  
+
   if (homeSection) {
     homeSection.style.opacity = '1';
     homeSection.style.transform = 'none';
