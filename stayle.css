@@ -150,38 +150,70 @@ header {
 /* fine header  */
 
 .home {
-  margin: 160px 200px;
+  max-width: 1200px;
+  margin: 140px auto 100px auto;
+  padding: 0 25px;
+  box-sizing: border-box;
+  width: 100%;
 }
 
 .home-container {
   display: flex;
-  gap: 6rem;
+  gap: 4rem;
+  align-items: center;
+  justify-content: space-between;
 }
 
 .home-p {
-  color: black;
-  background-color: rgba(128, 128, 128, 0.214);
-  display: inline-block;
+  color: #1f2937;
+  background-color: #f3f4f6;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
   border-radius: 25px;
-  padding: 5px 10px;
-  margin-bottom: 30px;
+  padding: 6px 14px;
+  margin-bottom: 25px;
+  font-size: 14px;
+  font-weight: 500;
+  border: 1px solid #e5e7eb;
 }
 
 .home-s {
   font-weight: bold;
-  color: green;
+  color: #16a34a;
+  font-size: 12px;
 }
 
 .info-home h1 {
-  font-size: 70px;
+  font-size: clamp(38px, 5vw, 68px);
   font-family: "Raleway", sans-serif;
-  margin-bottom: 20px;
+  font-weight: 700;
+  margin-bottom: 15px;
+  line-height: 1.15;
 }
 
 .info-home h3 {
-  font-size: 40px;
+  font-size: clamp(24px, 3.2vw, 38px);
   font-family: "Playfair Display", serif;
   margin-bottom: 20px;
+  color: #1e40af;
+  min-height: 52px;
+  display: flex;
+  align-items: center;
+  white-space: nowrap;
+}
+
+.cursor {
+  display: inline-block;
+  font-weight: 300;
+  color: #474af0;
+  margin-left: 3px;
+  animation: cursorBlink 0.9s infinite;
+}
+
+@keyframes cursorBlink {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0; }
 }
 
 .info-p {
@@ -310,7 +342,11 @@ hr {
 /* fine home  */
 
 .about{
-    margin: 160px 200px;
+    max-width: 1200px;
+    margin: 120px auto;
+    padding: 0 25px;
+    box-sizing: border-box;
+    width: 100%;
 }
 
 .about p{
@@ -386,99 +422,122 @@ hr {
 }
 
 
-.project{
-    margin: 160px 200px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    flex-direction: column;
+.project {
+  max-width: 1200px;
+  margin: 120px auto;
+  padding: 0 25px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  box-sizing: border-box;
+  width: 100%;
 }
 
-.project p{
-    padding-bottom: 20px;
-    font-size: 13px;
-    color: rgb(50, 50, 50); 
+.project > p:first-child {
+  padding-bottom: 10px;
+  font-size: 13px;
+  letter-spacing: 2px;
+  font-weight: 600;
+  color: #474af0;
+  text-transform: uppercase;
 }
 
-.project h1{
-    font-family: "Open Sans", sans-serif;
-    padding-bottom: 10px;
+.project h1 {
+  font-family: "Open Sans", sans-serif;
+  font-size: 2.2rem;
+  font-weight: 700;
+  padding-bottom: 10px;
+  color: #111;
+  text-align: center;
 }
 
-.project hr{
-    width: 10%;
+.project hr {
+  width: 60px;
+  height: 3px;
+  background: #474af0;
+  border: none;
+  border-radius: 2px;
+  margin: 5px auto 20px auto;
 }
 
-.info-pro{
-    padding-top: 20px;
+.info-pro {
+  padding-top: 5px;
+  padding-bottom: 35px;
+  text-align: center;
 }
 
-.info-pro p{
-    padding-bottom: 10px;
+.info-pro p {
+  padding-bottom: 5px;
+  color: #555;
+  font-size: 1rem;
 }
 
 .projects-container {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  grid-template-columns: repeat(3, 1fr);
   gap: 25px;
-  max-width: 1100px;
-  margin: auto;
-}
-
-/* Ensure grid rows size correctly and last row isn't clipped */
-.projects-container {
-  grid-auto-rows: auto;      /* let each row size to its content */
-  align-items: start;        /* prevent items from vertically centering/cutting */
-  padding-bottom: 60px;      /* space so last cards don't touch footer */
+  max-width: 1200px;
+  width: 100%;
+  margin: 0 auto;
+  align-items: stretch;
+  padding-bottom: 60px;
+  box-sizing: border-box;
 }
 
 .project-card {
   background: #fff;
-  padding: 20px;
+  padding: 22px;
   border-radius: 16px;
-  box-shadow: 0 5px 15px rgba(0,0,0,0.1);
-  transition: 0.3s ease;
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.07);
+  transition: transform 0.3s cubic-bezier(0.25, 1, 0.5, 1), box-shadow 0.3s cubic-bezier(0.25, 1, 0.5, 1);
   display: flex;
   flex-direction: column;
-  height: 500px;
-}
-
-/* Override fixed card height on smaller screens */
-@media (max-width: 1024px) {
-  .project-card {
-    height: auto !important;
-    min-height: 0;
-  }
-
-  .project {
-    align-items: stretch; /* allow projects-container to take full width/height */
-    padding-bottom: 20px;
-  }
+  height: 100%;
+  box-sizing: border-box;
 }
 
 .project-card:hover {
   transform: translateY(-6px);
+  box-shadow: 0 14px 28px rgba(30, 64, 175, 0.12), 0 6px 12px rgba(0, 0, 0, 0.05);
 }
 
 .project-card img {
   width: 100%;
+  height: 180px;
+  object-fit: cover;
   border-radius: 12px;
   margin-bottom: 15px;
+  flex-shrink: 0;
+  transition: transform 0.35s ease;
+}
+
+.project-card:hover img {
+  transform: scale(1.02);
 }
 
 .project-card h3 {
   color: #1e40af;
   margin-bottom: 8px;
+  font-size: 1.22rem;
+  font-weight: 600;
+  flex-shrink: 0;
 }
 
 .project-card p {
   color: #555;
   font-size: 0.9rem;
+  line-height: 1.55;
   margin-bottom: 15px;
+  flex: 1 1 auto;
 }
 
 .skills {
   margin-bottom: 15px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  flex-shrink: 0;
 }
 
 .skills a {
@@ -486,22 +545,25 @@ hr {
   background: #e0e7ff;
   color: #1e3a8a;
   text-decoration: none;
-  font-size: 0.8rem;
+  font-size: 0.78rem;
+  font-weight: 500;
   padding: 5px 10px;
   border-radius: 6px;
-  margin: 3px;
-  transition: background 0.3s;
+  margin: 0;
+  transition: background 0.25s ease, transform 0.2s ease;
 }
 
 .skills a:hover {
   background: #c7d2fe;
+  transform: translateY(-1px);
 }
 
 .btns {
   margin-top: auto;
   display: flex;
   justify-content: center;
-  padding: 15px 0;
+  padding: 10px 0 5px 0;
+  flex-shrink: 0;
 }
 
 .btn {
@@ -511,66 +573,119 @@ hr {
   background: #1e40af;
   color: white;
   text-decoration: none;
-  transition: 0.3s;
+  transition: background-color 0.25s ease, transform 0.2s ease, box-shadow 0.25s ease;
   display: flex;
   align-items: center;
   gap: 8px;
+  font-weight: 500;
+  font-size: 0.92rem;
 }
 
-.services{
-    margin: 160px 200px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    flex-direction: column;
+.btn:hover {
+  background-color: #1e3a8a;
+  transform: translateY(-2px);
+  box-shadow: 0 6px 16px rgba(30, 64, 175, 0.25);
 }
 
-.services p{
-    padding-bottom: 20px;
-    font-size: 13px;
-    color: rgb(50, 50, 50); 
+.services {
+  max-width: 1200px;
+  margin: 120px auto;
+  padding: 0 25px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  box-sizing: border-box;
+  width: 100%;
 }
 
-.services h1{
-    font-family: "Open Sans", sans-serif;
-    padding-bottom: 10px;
+.services > p:first-child {
+  padding-bottom: 10px;
+  font-size: 13px;
+  letter-spacing: 2px;
+  font-weight: 600;
+  color: #474af0;
+  text-transform: uppercase;
 }
 
-.services hr{
-    width: 10%;
+.services h1,
+.services h2 {
+  font-family: "Open Sans", sans-serif;
+  font-size: 2.2rem;
+  font-weight: 700;
+  padding-bottom: 10px;
+  color: #111;
+  text-align: center;
+}
+
+.services hr {
+  width: 60px;
+  height: 3px;
+  background: #474af0;
+  border: none;
+  border-radius: 2px;
+  margin: 5px auto 25px auto;
 }
 
 .services-container {
-  padding-top: 30px;
+  padding-top: 15px;
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  grid-template-columns: repeat(3, 1fr);
   gap: 25px;
-  max-width: 1100px;
-  margin: auto;
+  max-width: 1200px;
+  width: 100%;
+  margin: 0 auto;
+  align-items: stretch;
+  box-sizing: border-box;
 }
 
 .service-card {
   background: #fff;
-  padding: 25px;
+  padding: 30px 24px;
   border-radius: 16px;
-  box-shadow: 0 5px 15px rgba(0,0,0,0.1);
-  transition: 0.5s ease;
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.07);
+  transition: transform 0.3s cubic-bezier(0.25, 1, 0.5, 1), box-shadow 0.3s cubic-bezier(0.25, 1, 0.5, 1);
   text-align: center;
   position: relative;
   overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+  height: 100%;
+  box-sizing: border-box;
 }
 
 .service-card img {
-  width: 100px;
-  margin-bottom: 15px;
+  width: 80px;
+  height: 80px;
+  object-fit: contain;
+  margin-bottom: 18px;
   z-index: 1;
   position: relative;
+  transition: transform 0.35s ease;
+}
+
+.service-card .service-icon {
+  width: 80px;
+  height: 80px;
+  margin-bottom: 18px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 48px;
+  color: #1e40af;
+  z-index: 1;
+  position: relative;
+  transition: color 0.4s ease, transform 0.35s ease;
 }
 
 .service-card h3 {
   color: #1e40af;
   margin-bottom: 10px;
-  transition: color 0.5s;
+  font-size: 1.2rem;
+  font-weight: 600;
+  transition: color 0.4s;
   position: relative;
   z-index: 1;
 }
@@ -578,7 +693,8 @@ hr {
 .service-card p {
   color: #555;
   font-size: 0.9rem;
-  transition: color 0.5s;
+  line-height: 1.55;
+  transition: color 0.4s;
   position: relative;
   z-index: 1;
 }
@@ -592,24 +708,39 @@ hr {
   height: 100%;
   background: #474af0;
   z-index: 0;
-  transition: 0.5s;
+  transition: 0.45s ease;
 }
 
 .service-card:hover::before {
   left: 0;
 }
 
+.service-card:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 14px 28px rgba(71, 74, 240, 0.18);
+}
+
 .service-card:hover h3,
-.service-card:hover p {
+.service-card:hover p,
+.service-card:hover .service-icon {
   color: #fff;
 }
 
-.contact{
-    margin: 160px 200px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    flex-direction: column;
+.service-card:hover img,
+.service-card:hover .service-icon i {
+  transform: scale(1.08);
+}
+
+.contact {
+  max-width: 1200px;
+  margin: 120px auto;
+  padding: 0 25px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  box-sizing: border-box;
+  width: 100%;
 }
 
 .contact p{
@@ -896,19 +1027,22 @@ body {
   font-family: sans-serif;
 }
 
+/* 🔹 Preloader Overlay */
 #loading-screen {
   position: fixed;
-  top:0; left:0;
-  width:100%; height:100%;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
   background-color: #000;
-  display:flex;
-  justify-content:center;
-  align-items:center;
-  flex-direction:column;
-  z-index:9999;
-  overflow:hidden;
-  color:#00f0ff;
-  text-align:center;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  z-index: 9999;
+  overflow: hidden;
+  color: #00f0ff;
+  text-align: center;
 }
 
 .hidden {
@@ -922,11 +1056,11 @@ body {
 
 @keyframes fall {
   0% {
-    opacity:0;
+    opacity: 0;
     transform: translateY(-200px);
   }
   60% {
-    opacity:1;
+    opacity: 1;
     transform: translateY(20px);
   }
   100% {
@@ -941,111 +1075,209 @@ body {
 }
 
 .sub-icons {
-  display:flex;
-  justify-content:center;
+  display: flex;
+  justify-content: center;
   gap: 25px;
   margin-bottom: 20px;
 }
 
 #main-page {
-  opacity:0;
+  opacity: 0;
   transition: opacity 1s ease;
 }
 
 #main-page.visible {
-  opacity:1;
+  opacity: 1;
 }
 
-/* Responsive for tablets and phones */
+/* Lock page scroll while the intro is playing */
+body.loading-active {
+  overflow: hidden;
+}
+
+/* ---------------------- */
+/* 🔹 Tablet Responsive */
+/* ---------------------- */
 @media (max-width: 1024px) {
   .home, .about, .project, .services, .contact {
-    margin: 120px 50px;
+    margin: 90px auto;
+    padding: 0 25px;
+    max-width: 100%;
+    box-sizing: border-box;
   }
 
   .home-container, .about-container {
     flex-direction: column;
-    gap: 3rem;
+    gap: 2.5rem;
+    align-items: center;
+    text-align: center;
   }
 
-  .home img, .about img {
+  .info-p2 {
+    justify-content: center;
+  }
+
+  .btnn {
+    justify-content: center;
+  }
+
+  .follow {
+    justify-content: center;
+  }
+
+  .home img {
     width: 100%;
+    max-width: 340px;
     height: auto;
   }
 
-  .ul-list {
+  .about img {
+    position: static;
+    bottom: auto;
+    width: 100%;
+    max-width: 320px;
+    height: auto;
+    margin: 0 auto 20px auto;
+    object-fit: cover;
+  }
+
+  .card {
     flex-wrap: wrap;
+    justify-content: center;
     gap: 1rem;
-    padding: 8px 15px;
+  }
+
+  .card .c1 {
+    width: 100%;
+    max-width: 320px;
+  }
+
+  .projects-container {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 20px;
+    max-width: 850px;
+    margin: 0 auto;
+    align-items: stretch;
+    padding-bottom: 50px;
+  }
+
+  .services-container {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 20px;
+    max-width: 850px;
+    margin: 0 auto;
+    align-items: stretch;
+  }
+
+  .project-card {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    min-height: 0;
+    padding: 20px;
+  }
+
+  .project-card img {
+    width: 100%;
+    height: 180px;
+    max-width: none;
+    object-fit: cover;
+  }
+
+  .service-card {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    min-height: 0;
+    padding: 25px 20px;
+  }
+
+  .service-card img {
+    width: 70px;
+    height: 70px;
+  }
+
+  .service-card .service-icon {
+    width: 70px;
+    height: 70px;
+    font-size: 42px;
   }
 }
 
-/* Phone layout */
+/* ---------------------- */
+/* 🔹 Phone Responsive */
+/* ---------------------- */
 @media (max-width: 768px) {
-  /* header {
-    display: none;
-  } */
-
   .home, .about, .project, .services, .contact {
-    margin: 100px 20px;
+    margin: 70px auto;
+    padding: 0 16px;
   }
 
-  .home-container, .about-container, .contact-content {
-    flex-direction: column;
-    gap: 2rem;
+  .info-home h1 {
+    font-size: 34px;
+    margin-bottom: 12px;
   }
 
-  .projects-container, .services-container {
+  .info-home h3 {
+    font-size: clamp(18px, 6vw, 30px);
+    min-height: 38px;
+    white-space: nowrap;
+    justify-content: center;
+  }
+
+  .projects-container {
     grid-template-columns: 1fr;
     gap: 20px;
+    max-width: 480px;
+    margin: 0 auto;
+    padding-bottom: 40px;
   }
 
-  .home img, .about img {
-    width: 100%;
-    max-width: 100%;
+  .services-container {
+    grid-template-columns: 1fr;
+    gap: 20px;
+    max-width: 480px;
+    margin: 0 auto;
+  }
+
+  .project-card {
     height: auto;
+    min-height: 0;
+    padding: 18px;
   }
 
-  .btn-home1, .btn-home2, .btn, .btn-send {
+  .project-card img {
     width: 100%;
-    text-align: center;
-  }
-  
-  .follow ul {
-    flex-wrap: wrap;
-    justify-content: center;
-    gap: 10px;
+    height: 180px;
+    max-width: 100%;
+    object-fit: cover;
   }
 
-  .footer-links {
-    flex-direction: column;
-    gap: 15px;
+  .service-card {
+    height: auto;
+    min-height: 0;
+    padding: 22px 18px;
   }
 
-  /* ensure button wrappers take full width on mobile */
   .btn-href {
     display: block;
     width: 100%;
+    max-width: 380px;
     box-sizing: border-box;
   }
 
-  /* make both Hire and Download CV identical in size and tap area */
   .btn-home1,
   .btn-home2 {
     display: inline-flex;
     width: 100%;
-    max-width: 420px;    /* prevents overly wide buttons on large phones */
+    max-width: 380px;
     padding: 12px 16px;
-    height: 48px;        /* uniform height */
+    height: 48px;
     align-items: center;
     justify-content: center;
     box-sizing: border-box;
-    font-size: 16px;
+    font-size: 15px;
     border-radius: 10px;
-  }
-
-  /* if btn-home2 uses a border, ensure visual parity without changing colors */
-  .btn-home2 {
-    /* keep existing border color; padding/height already equalized */
   }
 
   .btnn {
@@ -1054,280 +1286,63 @@ body {
     align-items: center;
     width: 100%;
   }
-}
 
-/* ...existing code... */
-@media (max-width: 1024px) {
-
-  /* header {
-    display: none;
-  } */
-
-  .home, .about, .project, .services, .contact {
-    top: 40px;
-    position: relative;
-    margin: 20px auto;
-    padding: 0 15px;
-    text-align: center;
-    max-width: 100%;
-    overflow-wrap: break-word;
-  }
-
-  .home-container,
-  .about-container,
-  .services-container,
-  .projects-container,
-  .contact-content,
-  .card {
-    flex-direction: column !important;
-    align-items: center;
+  .btn {
+    width: 100%;
+    max-width: 260px;
     justify-content: center;
-    gap: 1.5rem;
-  }
-
-  .about img {
-    width: 100%;
-    max-width: 220px; 
-    height: auto;
-    margin-bottom: 20px;
-    position: relative;
-    z-index: 1; 
-  }
-
-  .card .c1 {
-    width: 100%;
-    max-width: 300px;
     text-align: center;
-    margin: 0 auto;
   }
-
-  .home img,
-  .project-card img,
-  .service-card img {
-    width: 100%;
-    max-width: 300px;
-    height: auto;
-    display: block;
-    margin: 0 auto 15px auto;
-    object-fit: cover;
-  }
-
-  .info-home h1 { font-size: 26px; }
-  .info-home h3 { font-size: 18px; }
-  .info-p, .info-p2, .home-p, .about p, .project p, .service-card p, .contact p {
-    font-size: 14px;
-  }
-  .project-card h3, .service-card h3 { font-size: 16px; }
 
   .contact-content {
-    justify-content: center;
-    align-items: center;
-    text-align: center;
+    flex-direction: column;
+    gap: 2rem;
+    padding: 0;
+    width: 100%;
   }
 
   .contact-info, .contact-form {
     width: 100%;
-    max-width: 400px;
+    max-width: 100%;
+    text-align: center;
   }
 
-  html, body {
-    overflow-x: hidden;
-  }
-}
-
-/* Mobile image fixes (ensure nishant.jpg and other images display correctly on small screens) */
-@media (max-width: 480px) {
-  .about img,
-  .home img,
-  .project-card img,
-  .service-card img {
-    position: static !important;
-    bottom: auto !important;
-    max-width: 420px;
-    height: auto !important;
-    object-fit: cover;
-    border-radius: 12px;
-    margin: 0 auto 12px;
-    display: block;
+  .contact-details {
+    align-items: center;
   }
 
-  /* If the filename/path contains "nishant" prefer contain to avoid important parts being cropped */
-  .about img[src*="nishant"],
-  .home img[src*="nishant"],
-  img[src*="nishant"] {
-    object-fit: contain;
-    max-height: 60vh;
-  }
-}
-
-/* Slightly larger phones / small tablets */
-@media (max-width: 768px) and (min-width: 481px) {
-  .about img,
-  .home img,
-  .project-card img,
-  .service-card img {
-    position: static !important;
-    bottom: auto !important;
-    width: 100% !important;
-    max-width: 540px;
-    height: auto !important;
-    object-fit: cover;
-    border-radius: 12px;
-    margin: 0 auto 12px;
-  }
-}
-
-/* Tablet-specific fix for nishant.jpg */
-@media (min-width: 481px) and (max-width: 1024px) {
-  .about img[src*="nishant"],
-  img[src*="nishant"] {
-    width: 260px;               /* fixed, balanced size on tablets */
-    max-width: 60%;            /* relative cap for varied screens */
-    height: auto;
-    object-fit: contain;       /* avoid cropping important parts */
-    margin: 0 auto 16px;
-    position: relative;        /* override desktop bottom offset */
-    bottom: 0;
-    border-radius: 12px;
-    box-shadow: none;
-    display: block;
-  }
-}
-
-/* Tablet: fix feature / project cards so layout and GitHub button align consistently */
-@media (min-width: 768px) and (max-width: 1024px) {
-  /* use two-column layout on tablets */
-  .projects-container {
-    grid-template-columns: repeat(2, 1fr);
-    gap: 20px;
-    max-width: 960px;
-    margin: 0 auto;
-    align-items: stretch; /* ensure grid items fill same vertical space if possible */
-  }
-
-  /* keep cards flexible and equalize height behavior */
-  .project-card {
-    display: flex;
-    flex-direction: column;
-    min-height: 420px; /* keeps cards visually balanced */
-    height: auto;      /* allow content to grow on smaller tablets */
-    padding: 18px;
-  }
-
-  /* consistent image sizing inside cards */
-  .project-card img {
-    width: 100%;
-    height: 180px;
-    object-fit: cover;
-    border-radius: 10px;
-    margin-bottom: 12px;
-  }
-
-  /* allow description to take available space so buttons sit at bottom */
-  .project-card p {
-    flex: 1 1 auto;
-    margin-bottom: 12px;
-  }
-
-  /* ensure button block sticks to bottom */
-  .btns {
-    margin-top: auto;
-    display: flex;
+  .social-links {
     justify-content: center;
-    gap: 10px;
-    padding-top: 8px;
   }
 
-  /* tighten skill badges and font sizes for tablet */
-  .skills a {
-    font-size: 0.78rem;
-    padding: 4px 8px;
+  .btn-send {
+    width: 100%;
+    padding: 14px;
+    font-size: 16px;
   }
 
-  /* service / feature cards match project card behavior */
-  .service-card {
-    display: flex;
+  .footer-links {
     flex-direction: column;
-    justify-content: flex-start;
-    min-height: 320px;
-    padding: 20px;
+    gap: 15px;
   }
 
-  .service-card img {
-    width: 80px;
-    height: auto;
-    margin: 0 auto 12px;
-  }
-
-  /* reduce LeetCode icon for tablet */
-  .icon-leet img {
-    width: 16px !important;
+  .follow ul {
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 12px;
   }
 }
 
-/* Extra safety for narrow phones */
-@media (max-width: 768px) {
-  .projects-container {
-    gap: 18px;
-    padding-bottom: 80px; /* more bottom space for mobile where footer overlaps */
-  }
-
-  .project-card {
-    height: auto !important;
-  }
-}
-
-/* Tablet fix: ensure last feature/service cards are not cut off */
-@media (min-width: 768px) and (max-width: 1024px) {
-  /* let grid rows stretch uniformly */
-  .projects-container,
-  .services-container {
-    grid-auto-rows: 1fr;    /* each row's height will match the tallest cell */
-    align-items: stretch;   /* ensure children stretch to fill grid cell */
-    padding-bottom: 80px;   /* extra space so last row doesn't touch footer */
-  }
-
-  /* make cards fill their grid cell and allow internal flex sizing */
-  .project-card,
-  .service-card {
-    height: 100%;
-    min-height: 0;          /* allows flex children to shrink properly */
-    display: flex;
-    flex-direction: column;
-  }
-
-  /* let content area grow so buttons stay at bottom */
-  .project-card p,
-  .service-card p {
-    flex: 1 1 auto;
-    min-height: 0;
-  }
-
-  /* ensure parent .project takes full available width/height */
-  .project, .services {
-    align-items: stretch;
-  }
-}
-
-/* Add initial state and transitions for sections */
+/* ---------------------- */
+/* 🔹 Section Reveal Transitions */
+/* ---------------------- */
 section {
-    opacity: 1;
-    transform: translateY(0);
-    transition: opacity 0.6s ease, transform 0.6s ease;
+  opacity: 1;
+  transform: translateY(0);
+  transition: opacity 0.6s ease, transform 0.6s ease;
 }
 
-/* Ensure first section (home) is visible by default */
-.home {
-    opacity: 1 !important;
-    transform: translateY(0) !important;
-}
-
-/* Keep the "Available for freelance work" text visible */
-.home-p {
-    opacity: 1 !important;
-}
-
-/* Immediate visibility for home section */
+/* Ensure home section is immediately visible */
 .home,
 .home-container,
 .home-section,
@@ -1339,19 +1354,57 @@ section {
 .info-p2,
 .btnn,
 .follow {
-    opacity: 1 !important;
-    transform: none !important;
-    transition: none !important;
+  opacity: 1 !important;
+  transform: none !important;
+  transition: none !important;
+}
+
+.home-p {
+  opacity: 1 !important;
 }
 
 /* Smooth reveal for other sections */
 section:not(.home) {
-    opacity: 0;
-    transform: translateY(20px);
-    transition: opacity 0.6s ease, transform 0.6s ease;
+  opacity: 0;
+  transform: translateY(24px);
+  transition: opacity 0.6s ease, transform 0.6s ease;
 }
 
 section:not(.home).visible {
-    opacity: 1;
-    transform: translateY(0);
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* ---------------------- */
+/* 🔹 Prefers Reduced Motion */
+/* ---------------------- */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+
+  /* Keep the intro preloader animation running, matching the original site */
+  #loading-screen .fall {
+    animation-duration: 0.9s !important;
+    animation-iteration-count: 1 !important;
+  }
+
+  #loading-screen {
+    transition-duration: 0.6s !important;
+  }
+
+  section:not(.home) {
+    opacity: 1 !important;
+    transform: none !important;
+  }
+
+  .cursor {
+    animation: none !important;
+    opacity: 1 !important;
+  }
 }

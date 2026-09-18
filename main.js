@@ -1,3 +1,4 @@
+// Nav and Section Selectors
 const navLinks = document.querySelectorAll('.ul-list li a');
 const sections = document.querySelectorAll('section');
 const menuToggle = document.getElementById('menu-toggle');
@@ -7,37 +8,41 @@ function removeActive() {
   navLinks.forEach(link => link.parentElement.classList.remove('active'));
 }
 
-// ✅ Toggle mobile menu
-menuToggle.addEventListener('click', () => {
-  navMenu.classList.toggle('show');
-  menuToggle.innerHTML = navMenu.classList.contains('show')
-    ? '<i class="fa-solid fa-xmark"></i>'
-    : '<i class="fa-solid fa-bars"></i>';
-});
+// Toggle Mobile Menu
+if (menuToggle && navMenu) {
+  menuToggle.addEventListener('click', () => {
+    navMenu.classList.toggle('show');
+    menuToggle.innerHTML = navMenu.classList.contains('show')
+      ? '<i class="fa-solid fa-xmark"></i>'
+      : '<i class="fa-solid fa-bars"></i>';
+  });
+}
 
-// ✅ Smooth scroll + highlight active + close menu on mobile
+// Smooth Scroll & Navigation Highlight
 navLinks.forEach(link => {
   link.addEventListener('click', e => {
     e.preventDefault();
     const targetId = link.getAttribute('href').substring(1);
     const targetSection = document.getElementById(targetId);
 
-    window.scrollTo({
-      top: targetSection.offsetTop - 80,
-      behavior: 'smooth'
-    });
+    if (targetSection) {
+      window.scrollTo({
+        top: targetSection.offsetTop - 80,
+        behavior: 'smooth'
+      });
+    }
 
     removeActive();
     link.parentElement.classList.add('active');
 
-    if (window.innerWidth <= 768) {
+    if (window.innerWidth <= 768 && navMenu) {
       navMenu.classList.remove('show');
-      menuToggle.innerHTML = '<i class="fa-solid fa-bars"></i>';
+      if (menuToggle) menuToggle.innerHTML = '<i class="fa-solid fa-bars"></i>';
     }
   });
 });
 
-
+// Scroll Event Handler
 window.addEventListener('scroll', () => {
   let scrollPos = window.scrollY + 100;
 
@@ -49,10 +54,8 @@ window.addEventListener('scroll', () => {
     }
   });
 
-  if(window.scrollY > 500){
-    backToTop.style.display = "flex";
-  } else {
-    backToTop.style.display = "none";
+  if (backToTop) {
+    backToTop.style.display = window.scrollY > 500 ? "flex" : "none";
   }
 
   revealElements.forEach(el => {
@@ -60,15 +63,17 @@ window.addEventListener('scroll', () => {
     const elementTop = el.getBoundingClientRect().top;
     const revealPoint = 150;
 
-    if(elementTop < windowHeight - revealPoint){
+    if (elementTop < windowHeight - revealPoint) {
       el.classList.add('active-reveal');
     }
   });
 });
 
+// Scroll Reveal Elements
 const revealElements = document.querySelectorAll('.home-container, .about-container, .projects-container, .services-container, .contact-content');
 revealElements.forEach(el => el.classList.add('reveal'));
 
+// Back To Top Button
 const backToTop = document.createElement('div');
 backToTop.innerHTML = '<i class="fa-solid fa-chevron-up"></i>';
 backToTop.id = "back-to-top";
@@ -98,164 +103,197 @@ backToTop.addEventListener('click', () => {
 backToTop.addEventListener('mouseover', () => backToTop.style.transform = 'scale(1.2)');
 backToTop.addEventListener('mouseout', () => backToTop.style.transform = 'scale(1)');
 
-const cards = document.querySelectorAll('.project-card, .c1, .service-card');
-cards.forEach(card => {
-  card.addEventListener('mouseenter', () => card.style.transform = 'translateY(-8px) scale(1.05)');
-  card.addEventListener('mouseleave', () => card.style.transform = 'translateY(0) scale(1)');
-});
-
+// Role Typing Animation
 const typingElement = document.querySelector('.info-home h3'); 
-const words = [ "Web Developer" ,"Android Developer", "AI & Automation Enthusiast", "Linux User"];
+const words = [
+  "Android Developer",
+  "Software Developer",
+  "Web Developer",
+  "AI/ML Developer",
+  "Data Scientist",
+  "Data Analyst",
+  "Linux User"
+];
 let wordIndex = 0;
 let charIndex = 0;
 let isDeleting = false;
-let typingSpeed = 100;
+let typewriterStarted = false;
+const typeSpeed = 100;
+const deleteSpeed = 50;
+const pauseEnd = 1200;
+const pauseStart = 300;
 
 function type() {
-    const currentWord = words[wordIndex];
-    let displayedText = currentWord.substring(0, charIndex);
-    
-    typingElement.innerHTML = displayedText + '<span class="cursor">|</span>';
+  if (!typingElement) return;
+  const currentWord = words[wordIndex];
+  const displayedText = currentWord.substring(0, charIndex);
+  
+  typingElement.innerHTML = `<span class="role-text">${displayedText}</span><span class="cursor">|</span>`;
 
-    if (!isDeleting && charIndex < currentWord.length) {
-        charIndex++;
-        setTimeout(type, typingSpeed);
-    } else if (isDeleting && charIndex > 0) {
-        charIndex--;
-        setTimeout(type, typingSpeed / 2);
-    } else {
-        isDeleting = !isDeleting;
-        if (!isDeleting) {
-            wordIndex = (wordIndex + 1) % words.length;
-        }
-        setTimeout(type, 1000);
-    }
+  if (!isDeleting && charIndex < currentWord.length) {
+    charIndex++;
+    setTimeout(type, typeSpeed);
+  } else if (!isDeleting && charIndex === currentWord.length) {
+    isDeleting = true;
+    setTimeout(type, pauseEnd);
+  } else if (isDeleting && charIndex > 0) {
+    charIndex--;
+    setTimeout(type, deleteSpeed);
+  } else {
+    isDeleting = false;
+    wordIndex = (wordIndex + 1) % words.length;
+    setTimeout(type, pauseStart);
+  }
 }
 
-document.addEventListener('DOMContentLoaded', type);
+function startTypewriter() {
+  if (typewriterStarted || !typingElement) return;
+  typewriterStarted = true;
+  type();
+}
 
+// Portfolio intro (preloader) animation
+// Sequence: laptop icon -> MY PROFILE -> social/code icons -> credit line.
+// The markup is already in index.html; this controls the timing and keeps the
+// intro safe when the loading elements are not present.
 document.addEventListener("DOMContentLoaded", () => {
+  const loadingScreen = document.getElementById("loading-screen");
+  const loadingContent = document.querySelector(".loading-content");
   const loadingText = document.getElementById("loading-text");
   const mainIcon = document.querySelector(".main-icon");
   const subIcons = document.querySelectorAll(".sub-icons i");
   const designerText = document.getElementById("designer-text");
-  const mainPage = document.getElementById("main-page");
-  const loadingScreen = document.getElementById("loading-screen");
 
-  function showElement(element, delay=0){
-    setTimeout(() => {
+  if (!loadingScreen || !loadingContent || !loadingText || !mainIcon || !designerText) {
+    return;
+  }
+
+  // Lock page scroll while the intro plays.
+  document.body.classList.add("loading-active");
+
+  // Add a polished neon treatment without requiring changes to the page markup.
+  loadingContent.style.setProperty('--intro-color', '#00f0ff');
+  loadingContent.style.textShadow = '0 0 18px rgba(0, 240, 255, .45)';
+  loadingText.style.letterSpacing = '2px';
+  designerText.style.letterSpacing = '0.5px';
+
+  const showElement = (element, delay = 0) => {
+    window.setTimeout(() => {
       element.classList.remove("hidden");
       element.classList.add("fall");
     }, delay);
-  }
+  };
 
-  showElement(loadingText, 0);          
-  showElement(mainIcon, 800);         
-  subIcons.forEach((icon, idx) => {
-    showElement(icon, 1600 + idx*400);  
-  });
-  showElement(designerText, 2800);    
+  // Match the reference image's top-to-bottom reveal order.
+  showElement(mainIcon, 150);
+  showElement(loadingText, 850);
+  subIcons.forEach((icon, index) => showElement(icon, 1450 + index * 250));
+  showElement(designerText, 2450);
 
-  setTimeout(() => {
+  // Leave enough time for the final line's animation to finish.
+  window.setTimeout(() => {
+    loadingScreen.style.transition = 'opacity .6s ease, visibility .6s ease';
     loadingScreen.style.opacity = '0';
-    setTimeout(() => loadingScreen.style.display='none', 500);
-    mainPage.classList.add("visible");
-  }, 4000);
+    loadingScreen.style.visibility = 'hidden';
+
+    window.setTimeout(() => {
+      loadingScreen.style.display = 'none';
+      document.body.classList.remove("loading-active");
+      document.body.classList.add('intro-complete');
+      const mainPage = document.getElementById("main-page");
+      if (mainPage) mainPage.classList.add("visible");
+      startTypewriter();
+    }, 650);
+  }, 3900);
 });
 
-document.getElementById('downloadCV').addEventListener('click', function () {
-    // Replace this path with the actual path to your CV file
-    const fileUrl = 'images/Nishant_Kumar_Resume.pdf'; 
-    const fileName = 'Nishant_Kumar_Resume.pdf';
-
-    const a = document.createElement('a');
-    a.href = fileUrl;
-    a.download = fileName; // triggers download instead of opening
-    document.body.appendChild(a);
-    a.click();
-    document.body.removeChild(a);
-  });
-
-// Handle form submission with AJAX
+// Contact Form AJAX Submission
 const contactForm = document.getElementById('contact-form');
-const submitButton = contactForm.querySelector('.btn-send');
+if (contactForm) {
+  const submitButton = contactForm.querySelector('.btn-send');
 
-contactForm.addEventListener('submit', async function(e) {
+  contactForm.addEventListener('submit', async function(e) {
     e.preventDefault();
     
-    // Change button state
     submitButton.disabled = true;
     submitButton.textContent = 'Sending...';
     
     try {
-        const formData = new FormData(this);
-        const response = await fetch(this.action, {
-            method: 'POST',
-            body: formData,
-            headers: {
-                'Accept': 'application/json'
-            }
-        });
-        
-        if (response.ok) {
-            // Success message
-            submitButton.textContent = 'Message Sent!';
-            submitButton.style.backgroundColor = '#22c55e';
-            contactForm.reset();
-            
-            // Reset button after 3 seconds
-            setTimeout(() => {
-                submitButton.textContent = 'Send Message';
-                submitButton.style.backgroundColor = '';
-                submitButton.disabled = false;
-            }, 3000);
-        } else {
-            throw new Error('Network response was not ok');
+      const formData = new FormData(this);
+      const response = await fetch(this.action, {
+        method: 'POST',
+        body: formData,
+        headers: {
+          'Accept': 'application/json'
         }
-    } catch (error) {
-        // Error message
-        submitButton.textContent = 'Failed to send';
-        submitButton.style.backgroundColor = '#ef4444';
+      });
+      
+      if (response.ok) {
+        submitButton.textContent = 'Message Sent!';
+        submitButton.style.backgroundColor = '#22c55e';
+        contactForm.reset();
         
-        // Reset button after 3 seconds
         setTimeout(() => {
-            submitButton.textContent = 'Send Message';
-            submitButton.style.backgroundColor = '';
-            submitButton.disabled = false;
+          submitButton.textContent = 'Send Message';
+          submitButton.style.backgroundColor = '';
+          submitButton.disabled = false;
         }, 3000);
+      } else {
+        throw new Error('Network response was not ok');
+      }
+    } catch (error) {
+      submitButton.textContent = 'Failed to send';
+      submitButton.style.backgroundColor = '#ef4444';
+      
+      setTimeout(() => {
+        submitButton.textContent = 'Send Message';
+        submitButton.style.backgroundColor = '';
+        submitButton.disabled = false;
+      }, 3000);
     }
-});
+  });
+}
 
+// Section Intersection Observer for Scroll Animations
 document.addEventListener('DOMContentLoaded', function() {
-    // Make home section and all its content visible immediately
-    const homeSection = document.querySelector('.home');
-    const homeContent = document.querySelectorAll('.home *');
-    
-    if (homeSection) {
-        homeSection.style.opacity = '1';
-        homeSection.style.transform = 'translateY(0)';
-        homeContent.forEach(element => {
-            element.style.opacity = '1';
-            element.style.transform = 'translateY(0)';
-        });
-    }
+  const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
-    // For other sections, keep the scroll animation
-    const otherSections = document.querySelectorAll('section:not(.home)');
-    const observer = new IntersectionObserver((entries) => {
-        entries.forEach(entry => {
-            if (entry.isIntersecting) {
-                entry.target.style.opacity = '1';
-                entry.target.style.transform = 'translateY(0)';
-            }
-        });
+  const homeSection = document.querySelector('.home');
+  const homeContent = document.querySelectorAll('.home *');
+  
+  if (homeSection) {
+    homeSection.style.opacity = '1';
+    homeSection.style.transform = 'none';
+    homeContent.forEach(element => {
+      element.style.opacity = '1';
+      element.style.transform = 'none';
+    });
+  }
+
+  const otherSections = document.querySelectorAll('section:not(.home)');
+  if (prefersReducedMotion) {
+    otherSections.forEach(section => {
+      section.style.opacity = '1';
+      section.style.transform = 'none';
+    });
+  } else {
+    const observer = new IntersectionObserver((entries, obs) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.style.opacity = '1';
+          entry.target.style.transform = 'translateY(0)';
+          obs.unobserve(entry.target);
+        }
+      });
     }, {
-        threshold: 0.1
+      threshold: 0.08,
+      rootMargin: '0px 0px -40px 0px'
     });
 
     otherSections.forEach(section => {
-        section.style.opacity = '0';
-        section.style.transform = 'translateY(20px)';
-        observer.observe(section);
+      section.style.opacity = '0';
+      section.style.transform = 'translateY(24px)';
+      observer.observe(section);
     });
+  }
 });
